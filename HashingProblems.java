@@ -32,16 +32,30 @@ class HashingProblems {
      */
 
     public double getAverage(HashMap<Integer, Integer> map, int[] array) {
+        
+        //initializing sum and count
+        int sum = 0;
+        int count = 0;
 
         /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOU NAME AT TOP OF FILE
-         *
-         * Note: if NO values found in common between the HashMap and supplied array,
-         * returning 0.0 is NOT correct, as that is not the average value. Whereas
-         * returning 0.0/0.0 IS correct (which would return a non-number).
+        For loop is iterating numbers in array
+        If statement for if the number is a key in the map
+        then the map adds its value to the sum
+        count would then increment
          */
+        for (int num : array) {
+            if (map.containsKey(num)) {
+                sum += map.get(num);
+                count ++;
+            }
+        }
+        //If statement for if count found no common numbers
+        if (count == 0) {
+            return 0.0 / 0.0;
+        }
 
-         return 0.0 / 0.0;
+        //Return to sum divided by count
+        return (double) sum / count;
   }
 
 
@@ -53,16 +67,17 @@ class HashingProblems {
      */
 
   public ArrayList<String> odd(HashMap<Integer, String> map) {
-    
-      ArrayList<String> result = new ArrayList<>();
 
       /*
-       * ADD YOUR CODE HERE
-       *
-       * Hint: Consider iterating over the HashMap using the keySet method.
-       */
-
-
+      For loop is iterating entries of a map
+      If statement for if the key is odd
+      then result adds to get value
+      */
+      for (HashMap.Entry<Integer, String> entry : map.entrySet()) {
+          if (entry.getKey() % 2 != 0) {
+              result.add(entry.getValue());
+          }
+      } 
       return result;
   }
 
@@ -106,11 +121,43 @@ class HashingProblems {
 
   public int twoSums(int[] numbers, int k) {
 
+      //Creating a HashMap to map the keys to values
+      HashMap<Integer, Integer> map = new HashMap<>();
+      
+      //Initializing count
+      int count = 0;
+
       /*
-       * ADD YOUR CODE HERE
-       */
+      For loop to iterate the frequency of numbers in the array
+      If statement for if the map contains a number less than k
+      then count would increment
+      */
+      for (int num : numbers) {
+          if (map.containsKey(num - k)) {
+              count += map.get(num - k);
+          }
 
-      return -1;
+          /*
+          If statement to see if map contains a key with a number greater,
+          then count would increment
+          */
+          if (map.containsKey(num + k)) {
+              count += map.get(num + k);
+          }
+
+          //Adding within map by setting it to default value plus 1
+          map.put(num, map.getOrDefault(num, 0) + 1);
+      }
+
+      /*
+      If statement for if k is 0,
+      then divide value of count by 2
+      */
+      if (k == 0) {
+          count /= 2;
+      }
+      
+      //Return back to count
+      return count;
   }
-
 } /* end class HashingProblems */
